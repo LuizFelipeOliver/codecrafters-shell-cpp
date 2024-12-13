@@ -13,15 +13,30 @@ int main() {
 
     std::string input;
     std::getline(std::cin, input);
+    char *token = std::strtok(&input[0], " ");
 
-    if (input == "exit 0")
-      std::cout << input << ": command not found\n";
-    return 0;
+    char *command = token;
 
-    if (input == "echo") {
+    if (std::strcmp(command, "exit 0") == 0)
+      return 0;
+
+    if (std::strcmp(command, "echo") == 0) {
       std::cout << input.substr(5);
+      /*token = std::strtok(nullptr, " ");
+      bool check_last_token = false;
+      while (token != nullptr) {
+        if (check_last_token) {
+          std::cout << token;
+        } else {
+          std::cout << token << " ";
+        }
+        token = std::strtok(nullptr, "");
+      }
+      std::cout << std::endl;*/
       return 0;
     }
+
+    std::cout << input << ": command not found\n";
 
   } while (true);
 }
