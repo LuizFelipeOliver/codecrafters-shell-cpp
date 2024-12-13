@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-enum commands { echo, cd, quit, type, invalid };
+enum commands { type, echo, cd, quit, invalid };
 
 commands string_to_commands(std::string str) {
   if (str.find("echo") != std::string::npos)
