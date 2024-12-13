@@ -23,28 +23,26 @@ int main() {
   std::cout << std::unitbuf;
   std::cerr << std::unitbuf;
 
-  do {
-    // Uncomment this block to pass the first stage
-    std::string input;
+  // Uncomment this block to pass the first stage
+  std::string input;
 
-    while (!input.empty()) {
-      std::cout << "$ ";
-      std::getline(std::cin, input);
+  while (!input.empty()) {
+    std::cout << "$ ";
+    std::getline(std::cin, input);
 
-      switch (string_to_commands(input)) {
-      case echo:
-        std::cout << input.substr(5) << "\n";
-        break;
+    switch (string_to_commands(input)) {
+    case echo:
+      std::cout << input.substr(5) << "\n";
+      break;
 
-      case quit:
-        return 0;
-        break;
+    case quit:
+      return 0;
+      break;
 
-      default:
-        std::cout << input << ": command not found" << '\n';
-        break;
-      }
+    default:
+      std::cout << input << ": command not found" << '\n';
+      break;
     }
-
-  } while (true);
+  }
+  return 0;
 }
