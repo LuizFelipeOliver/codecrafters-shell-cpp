@@ -3,19 +3,16 @@
 #include <iostream>
 
 int main() {
+  // Flush after every std::cout / std:cerr
+  std::cout << std::unitbuf;
+  std::cerr << std::unitbuf;
+
+  // Uncomment this block to pass the first stage
+  std::cout << "$ ";
+
   do {
-    // Flush after every std::cout / std:cerr
-    std::cout << std::unitbuf;
-    std::cerr << std::unitbuf;
-
-    // Uncomment this block to pass the first stage
-    std::cout << "$ ";
-
     std::string input;
     std::getline(std::cin, input);
-    char *token = std::strtok(&input[0], " ");
-
-    char *command = token;
 
     if (input == "exit 0")
       return 0;
