@@ -30,6 +30,9 @@ int main() {
           std::cout << token << " ";
         }
         token = std::strtok(nullptr, "");
+        if (token == nullptr) {
+          check_last_token = true;
+        }
       }
       std::cout << std::endl;
       return 0;
