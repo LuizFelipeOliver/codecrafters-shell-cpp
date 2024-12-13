@@ -15,13 +15,13 @@ int main() {
     std::getline(std::cin, input);
 
     if (input == "exit 0")
-      return 0;
+      std::cout << input << ": command not found\n";
+    return 0;
 
     if (input == "echo") {
       std::cout << input.substr(5);
       return 0;
     }
 
-    std::cout << input << ": command not found\n";
   } while (true);
 }
