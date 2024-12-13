@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-enum commands { type, echo, cd, quit, invalid };
+enum commands { path, type, echo, cd, quit, invalid };
 
 commands string_to_commands(std::string str) {
   if (str.find("type") != std::string::npos)
@@ -17,6 +17,9 @@ commands string_to_commands(std::string str) {
 
   if (str.find("exit") != std::string::npos)
     return quit;
+
+  if (str.find("PATH") != std::string::npos)
+    return path;
 
   return invalid;
 }
