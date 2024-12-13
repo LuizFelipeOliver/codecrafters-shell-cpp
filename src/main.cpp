@@ -24,8 +24,7 @@ int main() {
   std::cerr << std::unitbuf;
 
   // Uncomment this block to pass the first stage
-  std::string input;
-
+  std::string input = " ";
   while (!input.empty()) {
     std::cout << "$ ";
     std::getline(std::cin, input);
