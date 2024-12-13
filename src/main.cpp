@@ -1,6 +1,22 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <string>
+
+enum commands { echo, cd, quit, invalid };
+
+commands string_to_commands(std::string str) {
+  if (str.find("echo") != std::string::npos)
+    return echo;
+
+  if (str.find("cd") != std::string::npos)
+    return cd;
+
+  if (str.find("exit") != std::string::npos)
+    return quit;
+
+  return invalid;
+}
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -9,36 +25,26 @@ int main() {
 
   do {
     // Uncomment this block to pass the first stage
-    std::cout << "$ ";
-
     std::string input;
-    std::getline(std::cin, input);
-    char *token = std::strtok(&input[0], " ");
 
-    char *command = token;
+    while (!input.empty()) {
+      std::cout << "$ ";
+      std::getline(std::cin, input);
 
-    if (std::strcmp(command, "exit 0") == 0)
-      return 0;
+      switch (string_to_commands(input)) {
+      case echo:
+        std::cout << input.substr(5) << "\n";
+        break;
 
-    if (std::strcmp(command, "echo") == 0) {
-      token = std::strtok(nullptr, " ");
-      bool check_last_token = false;
-      while (token != nullptr) {
-        if (check_last_token) {
-          std::cout << token;
-        } else {
-          std::cout << token << " ";
-        }
-        token = std::strtok(nullptr, "");
-        if (token == nullptr) {
-          check_last_token = true;
-        }
+      case quit:
+        return 0;
+        break;
+
+      default:
+        std::cout << input << ": command not found" << '\n';
+        break;
       }
-      std::cout << std::endl;
-      return 0;
     }
-
-    std::cout << input << ": command not found\n";
 
   } while (true);
 }
