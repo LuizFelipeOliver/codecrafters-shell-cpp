@@ -18,7 +18,6 @@ int main() {
 
     if (std::strcmp(command, "exit 0") == 0) {
       return 0;
-      std::cout << input << ": command not found\n";
     }
 
     std::cout << input << ": command not found\n";
