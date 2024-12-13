@@ -6,6 +6,9 @@
 enum commands { type, echo, cd, quit, invalid };
 
 commands string_to_commands(std::string str) {
+  if (str.find("type") != std::string::npos)
+    return type;
+
   if (str.find("echo") != std::string::npos)
     return echo;
 
@@ -14,9 +17,6 @@ commands string_to_commands(std::string str) {
 
   if (str.find("exit") != std::string::npos)
     return quit;
-
-  if (str.find("type") != std::string::npos)
-    return type;
 
   return invalid;
 }
