@@ -21,8 +21,7 @@ int main() {
       return 0;
 
     if (std::strcmp(command, "echo") == 0) {
-      std::cout << input.substr(5);
-      /*token = std::strtok(nullptr, " ");
+      token = std::strtok(nullptr, " ");
       bool check_last_token = false;
       while (token != nullptr) {
         if (check_last_token) {
@@ -32,7 +31,7 @@ int main() {
         }
         token = std::strtok(nullptr, "");
       }
-      std::cout << std::endl;*/
+      std::cout << std::endl;
       return 0;
     }
 
