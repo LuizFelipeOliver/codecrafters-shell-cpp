@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
 
@@ -16,9 +17,8 @@ int main() {
 
     char *command = token;
 
-    if (std::strcmp(command, "exit 0") == 0) {
+    if (std::strcmp(command, "exit 0") == 0)
       return 0;
-    }
 
     std::cout << input << ": command not found\n";
   } while (true);
