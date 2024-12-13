@@ -1,3 +1,4 @@
+#include <cstring>
 #include <iostream>
 
 int main() {
@@ -10,6 +11,13 @@ int main() {
 
   std::string input;
   std::getline(std::cin, input);
+  char *token = std::strtok(&input[0], " ");
+
+  char *command = token;
+
+  if (std::strcmp(command, "exit 0") == 0) {
+    return 0;
+  }
 
   std::cout << input << ": command not found\n";
 }
