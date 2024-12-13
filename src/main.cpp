@@ -16,8 +16,8 @@ int main() {
   char *command = token;
 
   if (std::strcmp(command, "exit 0") == 0) {
-    std::cout << input << ": command not found\n";
     return 0;
+    std::cout << input << ": command not found\n";
   }
 
   std::cout << input << ": command not found\n";
