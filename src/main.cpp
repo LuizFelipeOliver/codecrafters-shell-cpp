@@ -18,9 +18,6 @@ commands string_to_commands(std::string str) {
   if (str.find("exit") != std::string::npos)
     return quit;
 
-  if (str.find("PATH") != std::string::npos)
-    return path;
-
   return invalid;
 }
 
@@ -46,7 +43,7 @@ int main() {
       if (string_to_commands(input.substr(5)) != invalid)
         std::cout << input.substr(5) << " is a shell builtin\n";
       else
-        std::cout << input.substr(5) << " not found\n";
+        std::cout << input.substr(5) << "is /usr/bin/" << input.substr(5);
       break;
 
     case quit:
