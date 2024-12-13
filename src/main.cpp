@@ -1,10 +1,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <ostream>
 #include <string>
 
-enum commands { path, type, echo, cd, quit, invalid };
+enum commands { type, echo, cd, quit, invalid };
 
 commands string_to_commands(std::string str) {
   if (str.find("type") != std::string::npos)
@@ -44,8 +43,8 @@ int main() {
       if (string_to_commands(input.substr(5)) != invalid)
         std::cout << input.substr(5) << " is a shell builtin\n";
       else
-        std::cout << input.substr(5) << " is /usr/bin/" << input.substr(5)
-                  << std::endl;
+        std::string path_env = std::getenv("PATH");
+      std::cout << path_env;
       break;
 
     case quit:
