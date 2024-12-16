@@ -71,7 +71,7 @@ int main() {
       if (string_to_commands(input.substr(5)) != invalid)
         cout << command << " is a shell builtin\n";
       else if (path_command.empty())
-        cout << command << not_found;
+        cout << command << " :" << not_found;
 
       cout << command << " is " << path_command << std::endl;
       break;
