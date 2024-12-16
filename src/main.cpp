@@ -6,7 +6,7 @@
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <vector>
+#include <unordered_map>
 
 using namespace std;
 
@@ -16,9 +16,7 @@ string get_path(string command) {
   stringstream ss(path_env);
 
   string path;
-  while (!ss.eof()) {
-
-    getline(ss, path, ':');
+  while (getline(ss, path, ':')) {
 
     string abs_path = path + "/" + command;
     if (filesystem::exists(abs_path)) {
@@ -28,37 +26,14 @@ string get_path(string command) {
   return "";
 }
 
-vector<string> split_string(const string &input) {
-  stringstream ss(input);
-  string world;
-  vector<string> tokens;
+enum commands { type, echo, cd, quit, invalid };
 
-  while (ss >> world) {
-    tokens.push_back(world);
-  }
+unordered_map<string, commands> command_map = {
+    {"type", type}, {"echo", echo}, {"cd", cd}, {"exit", quit}};
 
-  return tokens;
-}
-
-enum commands { program, type, echo, cd, quit, invalid };
-
-commands string_to_commands(string str) {
-  if (str == "type")
-    return type;
-
-  if (str == "echo")
-    return echo;
-
-  if (str == "cd")
-    return cd;
-
-  if (str == "exit")
-    return quit;
-
-  if (!get_path(str).empty())
-    return program;
-
-  return invalid;
+commands string_to_commands(const string &str) {
+  auto it = command_map.find(str);
+  return it != command_map.end() ? it->second : invalid;
 }
 
 int main() {
@@ -67,46 +42,47 @@ int main() {
   cerr << std::unitbuf;
 
   // Uncomment this block to pass the first stage
-  string input = " ";
+  string input;
 
   while (!input.empty()) {
     cout << "$ ";
     getline(std::cin, input);
 
-    vector<string> tokens = split_string(input);
+    if (input.empty())
+      continue;
 
-    string command = tokens[0];
-    string args = input.substr(command.size() + 1);
+    istringstream iss(input);
+    string command;
+
+    iss >> command;
+    string arg = input.substr(command.size() + 1);
+
     string not_found = " not found\n";
 
-    string path_command = get_path(args);
+    string path_command = get_path(command);
 
     switch (string_to_commands(command)) {
 
     case echo:
-      cout << args << "\n";
+      cout << arg << "\n";
       break;
 
     case type:
-      if (string_to_commands(args) != invalid) {
+      if (string_to_commands(arg) != invalid) {
         cout << command << " is a shell builtin\n";
       } else if (!path_command.empty()) {
-        cout << args << " is " << path_command << endl;
+        cout << command << " is " << path_command << std::endl;
       } else {
-        cout << args << ":" << not_found;
+        cout << command << ":" << not_found;
       }
       break;
 
-    case program:
-      system(command.c_str());
-
-      break;
     case quit:
       return 0;
       break;
 
     default:
-      cout << command << ": command" << not_found;
+      cout << input << ": command" << not_found;
       break;
     }
   }
