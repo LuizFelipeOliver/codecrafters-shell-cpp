@@ -33,7 +33,7 @@ std::string get_path(std::string command) {
   std::stringstream ss(env_path);
   std::string path;
 
-  while (std::getline(ss, path, ":")) {
+  while (ss.eof()) {
     std::filesystem::path abs_path = std::filesystem::path(path) / command;
 
     if (std::filesystem::exists(abs_path)) {
