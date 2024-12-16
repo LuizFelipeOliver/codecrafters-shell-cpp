@@ -83,14 +83,14 @@ int main() {
       break;
     case invalid:
       if (!path_command.empty()) {
-        string full_command = command + "" + arg;
+        string full_command = command + " " + arg;
+        cout << full_command;
         int result = system(full_command.c_str());
       }
 
       break;
     default:
       cout << input << ": command" << not_found;
-      cout << 0;
       break;
     }
   }
