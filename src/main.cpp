@@ -1,7 +1,9 @@
 #include <cstdlib>
 #include <cstring>
+#include <filesystem>
 #include <iostream>
 #include <ostream>
+#include <sstream>
 #include <string>
 
 enum commands { type, echo, cd, quit, invalid };
@@ -20,6 +22,26 @@ commands string_to_commands(std::string str) {
     return quit;
 
   return invalid;
+}
+
+std::string get_path(std::string command) {
+  const char *env_path = std::getenv("PATH");
+  if (!env_path) {
+    return "";
+  }
+
+  std::stringstream ss(env_path);
+  std::string path;
+
+  while (std::getline(ss, path, ":")) {
+    std::filesystem::path abs_path = std::filesystem::path(path) / command;
+
+    if (std::filesystem::exists(abs_path)) {
+      return abs_path;
+    }
+  }
+
+  return "";
 }
 
 int main() {
@@ -44,7 +66,7 @@ int main() {
       if (string_to_commands(input.substr(5)) != invalid)
         std::cout << input.substr(5) << " is a shell builtin\n";
       else
-        std::cout << input.substr(5) << " in " << std::getenv("PATH")
+        std::cout << input.substr(5) << " in " << get_path(input.substr(5))
                   << std::endl;
       break;
 
