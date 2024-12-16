@@ -1,5 +1,4 @@
 #include <cerrno>
-#include <complex>
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
@@ -61,7 +60,7 @@ int main() {
 
     string not_found = " not found\n";
 
-    string path_command = get_path(arg);
+    string path_command = get_path(command);
 
     switch (string_to_commands(command)) {
 
@@ -75,6 +74,7 @@ int main() {
       } else if (!path_command.empty()) {
         cout << arg << " is " << path_command << std::endl;
       } else {
+        cout << arg << ":" << not_found;
         cout << arg << " is " << path_command << std::endl;
       }
       break;
@@ -83,7 +83,7 @@ int main() {
       return 0;
       break;
     case invalid:
-      if (get_path(command).empty()) {
+      if (!path_command.empty()) {
         string full_command = command + " " + arg;
         int result = system(full_command.c_str());
       }
