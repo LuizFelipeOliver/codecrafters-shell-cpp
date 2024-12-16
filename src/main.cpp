@@ -13,7 +13,7 @@ using namespace std;
 
 string get_path(string command) {
   string path_env = getenv("PATH");
-  cout << path_env;
+
   stringstream ss(path_env);
 
   string path;
