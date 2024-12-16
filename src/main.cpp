@@ -6,32 +6,38 @@
 #include <sstream>
 #include <string>
 
+using namespace std;
+
 enum commands { type, echo, cd, quit, invalid };
 
-commands string_to_commands(std::string str) {
-  if (str.find("type") != std::string::npos)
+commands string_to_commands(string str) {
+  if (str.find("type") != string::npos)
     return type;
 
-  if (str.find("echo") != std::string::npos)
+  if (str.find("echo") != string::npos)
     return echo;
 
-  if (str.find("cd") != std::string::npos)
+  if (str.find("cd") != string::npos)
     return cd;
 
-  if (str.find("exit") != std::string::npos)
+  if (str.find("exit") != string::npos)
     return quit;
 
   return invalid;
 }
 
-std::string get_path(std::string command) {
-  std::string path_env = std::getenv("PATH");
-  std::stringstream ss(path_env);
-  std::string path;
+string get_path(string command) {
+  string path_env = getenv("PATH");
+
+  stringstream ss(path_env);
+
+  string path;
   while (!ss.eof()) {
+
     getline(ss, path, ':');
-    std::string abs_path = path + "/" + command;
-    if (std::filesystem::exists(abs_path)) {
+
+    string abs_path = path + "/" + command;
+    if (filesystem::exists(abs_path)) {
       return abs_path;
     }
   }
@@ -40,28 +46,34 @@ std::string get_path(std::string command) {
 
 int main() {
   // Flush after every std::cout / std:cerr
-  std::cout << std::unitbuf;
-  std::cerr << std::unitbuf;
+  cout << std::unitbuf;
+  cerr << std::unitbuf;
 
   // Uncomment this block to pass the first stage
-  std::string input = " ";
+  string input = " ";
 
   while (!input.empty()) {
-    std::cout << "$ ";
-    std::getline(std::cin, input);
+    cout << "$ ";
+    getline(std::cin, input);
+
+    string command = input.substr(5);
+    string not_found = " not found\n";
 
     switch (string_to_commands(input)) {
 
     case echo:
-      std::cout << input.substr(5) << "\n";
+      cout << command << "\n";
       break;
 
     case type:
       if (string_to_commands(input.substr(5)) != invalid)
-        std::cout << input.substr(5) << " is a shell builtin\n";
+        cout << command << " is a shell builtin\n";
       else
-        std::cout << input.substr(5) << " is " << get_path(input.substr(5))
-                  << std::endl;
+        string path_command = get_path(command);
+      if (path_command.empty()) {
+        cout << command << not_found;
+      }
+      cout << command << " is " << path_command << std::endl;
       break;
 
     case quit:
@@ -69,7 +81,7 @@ int main() {
       break;
 
     default:
-      std::cout << input << ": command not found" << '\n';
+      cout << input << ": command" << not_found;
       break;
     }
   }
