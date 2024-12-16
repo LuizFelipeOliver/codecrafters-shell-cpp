@@ -60,7 +60,7 @@ int main() {
       if (string_to_commands(input.substr(5)) != invalid)
         std::cout << input.substr(5) << " is a shell builtin\n";
       else
-        std::cout << input.substr(5) << " in " << get_path(input.substr(5))
+        std::cout << input.substr(5) << " is " << get_path(input.substr(5))
                   << std::endl;
       break;
 
