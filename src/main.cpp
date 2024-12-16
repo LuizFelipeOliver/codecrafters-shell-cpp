@@ -59,6 +59,8 @@ int main() {
     string command = input.substr(5);
     string not_found = " not found\n";
 
+    string path_command = get_path(command);
+
     switch (string_to_commands(input)) {
 
     case echo:
@@ -68,11 +70,9 @@ int main() {
     case type:
       if (string_to_commands(input.substr(5)) != invalid)
         cout << command << " is a shell builtin\n";
-      else
-        string path_command = get_path(command);
-      if (path_command.empty()) {
+      else if (path_command.empty())
         cout << command << not_found;
-      }
+
       cout << command << " is " << path_command << std::endl;
       break;
 
