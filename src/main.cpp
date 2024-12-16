@@ -1,3 +1,4 @@
+#include <cerrno>
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
@@ -7,24 +8,6 @@
 #include <string>
 
 using namespace std;
-
-enum commands { type, echo, cd, quit, invalid };
-
-commands string_to_commands(string str) {
-  if (str.find("type") != string::npos)
-    return type;
-
-  if (str.find("echo") != string::npos)
-    return echo;
-
-  if (str.find("cd") != string::npos)
-    return cd;
-
-  if (str.find("exit") != string::npos)
-    return quit;
-
-  return invalid;
-}
 
 string get_path(string command) {
   string path_env = getenv("PATH");
@@ -42,6 +25,27 @@ string get_path(string command) {
     }
   }
   return "";
+}
+
+enum commands { program, type, echo, cd, quit, invalid };
+
+commands string_to_commands(string str) {
+  if (str.find("type") != string::npos)
+    return type;
+
+  if (str.find("echo") != string::npos)
+    return echo;
+
+  if (str.find("cd") != string::npos)
+    return cd;
+
+  if (str.find("exit") != string::npos)
+    return quit;
+
+  if (!get_path(str).empty())
+    return program;
+
+  return invalid;
 }
 
 int main() {
@@ -77,12 +81,16 @@ int main() {
       }
       break;
 
+    case program:
+      system(command.c_str());
+
+      break;
     case quit:
       return 0;
       break;
 
     default:
-      cout << path_command << input << ": command" << not_found;
+      cout << input << ": command" << not_found;
       break;
     }
   }
