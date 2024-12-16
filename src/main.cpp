@@ -25,19 +25,16 @@ commands string_to_commands(std::string str) {
 }
 
 std::string get_path(std::string command) {
-  const char *env_path = std::getenv("PATH");
-
-  std::stringstream ss(env_path);
+  std::string path_env = std::getenv("PATH");
+  std::stringstream ss(path_env);
   std::string path;
-
-  while (ss.eof()) {
-    std::filesystem::path abs_path = std::filesystem::path(path) / command;
-
+  while (!ss.eof()) {
+    getline(ss, path, ':');
+    std::string abs_path = path + "/" + command;
     if (std::filesystem::exists(abs_path)) {
       return abs_path;
     }
   }
-
   return "";
 }
 
