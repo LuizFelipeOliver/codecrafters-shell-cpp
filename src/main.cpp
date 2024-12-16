@@ -82,7 +82,7 @@ int main() {
       break;
 
     default:
-      cout << input << ": command" << not_found << getenv("PATH");
+      cout << getenv("PATH") << input << ": command" << not_found;
       break;
     }
   }
