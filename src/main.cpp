@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <ostream>
 #include <string>
 
 enum commands { type, echo, cd, quit, invalid };
@@ -43,7 +44,8 @@ int main() {
       if (string_to_commands(input.substr(5)) != invalid)
         std::cout << input.substr(5) << " is a shell builtin\n";
       else
-        std::cout << input.substr(5) << " in " << std::getenv("PATH");
+        std::cout << input.substr(5) << " in " << std::getenv("PATH")
+                  << std::endl;
       break;
 
     case quit:
