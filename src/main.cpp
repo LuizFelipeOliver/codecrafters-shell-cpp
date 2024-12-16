@@ -43,9 +43,7 @@ int main() {
       if (string_to_commands(input.substr(5)) != invalid)
         std::cout << input.substr(5) << " is a shell builtin\n";
       else
-        char *env_p = std::getenv("PATH");
-
-      std::cout << input.substr(5) << " in " << env_p;
+        std::cout << input.substr(5) << " in " << std::getenv("PATH");
       break;
 
     case quit:
