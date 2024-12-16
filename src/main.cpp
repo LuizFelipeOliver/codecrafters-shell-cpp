@@ -44,7 +44,7 @@ int main() {
   // Uncomment this block to pass the first stage
   string input;
 
-  while (!input.empty()) {
+  while (true) {
     cout << "$ ";
     getline(std::cin, input);
 
@@ -69,11 +69,11 @@ int main() {
 
     case type:
       if (string_to_commands(arg) != invalid) {
-        cout << command << " is a shell builtin\n";
+        cout << arg << " is a shell builtin\n";
       } else if (!path_command.empty()) {
-        cout << command << " is " << path_command << std::endl;
+        cout << arg << " is " << path_command << std::endl;
       } else {
-        cout << command << ":" << not_found;
+        cout << arg << ":" << not_found;
       }
       break;
 
