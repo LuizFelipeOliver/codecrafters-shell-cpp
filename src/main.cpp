@@ -88,7 +88,7 @@ int main() {
       }
       break;
     default:
-      cout << input << ": command" << not_found;
+      cout << command << ": command" << not_found;
       break;
     }
   }
