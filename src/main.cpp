@@ -1,4 +1,5 @@
 #include <cerrno>
+#include <complex>
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
@@ -20,7 +21,7 @@ string get_path(string command) {
   while (getline(ss, path, ':')) {
 
     string abs_path = path + "/" + command;
-    if (filesystem::exists(abs_path) && filesystem::is_regular_file(abs_path)) {
+    if (filesystem::exists(abs_path)) {
       return abs_path;
     }
   }
@@ -82,7 +83,7 @@ int main() {
       return 0;
       break;
     case invalid:
-      if (!path_command.empty()) {
+      if (get_path(command).empty()) {
         string full_command = command + " " + arg;
         int result = system(full_command.c_str());
       }
