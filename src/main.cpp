@@ -71,11 +71,11 @@ int main() {
     case type:
       if (string_to_commands(arg) != invalid) {
         cout << arg << " is a shell builtin\n";
-      } else if (!path_command.empty()) {
-        cout << arg << " is " << path_command << std::endl;
-      } else {
-        cout << arg << ":" << not_found;
-      }
+      } else
+        (!path_command.empty()) {
+          cout << arg << " is " << path_command << std::endl;
+        }
+      cout << arg << ":" << not_found;
       break;
 
     case quit:
