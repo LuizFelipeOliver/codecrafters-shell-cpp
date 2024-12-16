@@ -20,7 +20,7 @@ string get_path(string command) {
   while (getline(ss, path, ':')) {
 
     string abs_path = path + "/" + command;
-    if (filesystem::exists(abs_path)) {
+    if (filesystem::exists(abs_path) && filesystem::is_regular_file(abs_path)) {
       return abs_path;
     }
   }
