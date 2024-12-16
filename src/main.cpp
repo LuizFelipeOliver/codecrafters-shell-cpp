@@ -42,9 +42,9 @@ commands string_to_commands(string str) {
   if (str.find("exit") != string::npos)
     return quit;
 
-  if (get_path(str)
+  if (!get_path(str).empty())
     return program;
-
+  cout << str;
   return invalid;
 }
 
