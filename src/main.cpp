@@ -6,6 +6,7 @@
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -27,24 +28,36 @@ string get_path(string command) {
   return "";
 }
 
+vector<string> split_string(const string &input) {
+  stringstream ss(input);
+  string world;
+  vector<string> tokens;
+
+  while (ss >> world) {
+    tokens.push_back(world);
+  }
+
+  return tokens;
+}
+
 enum commands { program, type, echo, cd, quit, invalid };
 
 commands string_to_commands(string str) {
-  if (str.find("type") != string::npos)
+  if (str == "type")
     return type;
 
-  if (str.find("echo") != string::npos)
+  if (str == "echo")
     return echo;
 
-  if (str.find("cd") != string::npos)
+  if (str == "cd")
     return cd;
 
-  if (str.find("exit") != string::npos)
+  if (str == "exit")
     return quit;
 
   if (!get_path(str).empty())
     return program;
-  cout << str;
+
   return invalid;
 }
 
@@ -60,24 +73,27 @@ int main() {
     cout << "$ ";
     getline(std::cin, input);
 
-    string command = input.substr(5);
+    vector<string> tokens = split_string(input);
+
+    string command = tokens[0];
+    string args = input.substr(command.size() + 1);
     string not_found = " not found\n";
 
-    string path_command = get_path(command);
+    string path_command = get_path(args);
 
-    switch (string_to_commands(input)) {
+    switch (string_to_commands(command)) {
 
     case echo:
-      cout << command << "\n";
+      cout << args << "\n";
       break;
 
     case type:
-      if (string_to_commands(command) != invalid) {
+      if (string_to_commands(args) != invalid) {
         cout << command << " is a shell builtin\n";
       } else if (!path_command.empty()) {
-        cout << command << " is " << path_command << std::endl;
+        cout << args << " is " << path_command << endl;
       } else {
-        cout << command << ":" << not_found;
+        cout << args << ":" << not_found;
       }
       break;
 
@@ -90,7 +106,7 @@ int main() {
       break;
 
     default:
-      cout << input << ": command" << not_found;
+      cout << command << ": command" << not_found;
       break;
     }
   }
