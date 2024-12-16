@@ -6,6 +6,7 @@
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <unistd.h>
 #include <unordered_map>
 
 using namespace std;
@@ -80,7 +81,13 @@ int main() {
     case quit:
       return 0;
       break;
+    case invalid:
+      if (!path_command.empty()) {
+        string full_command = command + "" + arg;
+        int result = system(full_command.c_str());
+      }
 
+      break;
     default:
       cout << input << ": command" << not_found;
       break;
