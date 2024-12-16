@@ -74,7 +74,7 @@ int main() {
       } else if (!path_command.empty()) {
         cout << arg << " is " << path_command << std::endl;
       } else {
-        cout << arg << ":" << not_found;
+        cout << arg << " is " << path_command << std::endl;
       }
       break;
 
@@ -86,7 +86,6 @@ int main() {
         string full_command = command + " " + arg;
         int result = system(full_command.c_str());
       }
-
       break;
     default:
       cout << input << ": command" << not_found;
