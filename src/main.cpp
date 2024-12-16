@@ -26,9 +26,6 @@ commands string_to_commands(std::string str) {
 
 std::string get_path(std::string command) {
   const char *env_path = std::getenv("PATH");
-  if (!env_path) {
-    return "";
-  }
 
   std::stringstream ss(env_path);
   std::string path;
