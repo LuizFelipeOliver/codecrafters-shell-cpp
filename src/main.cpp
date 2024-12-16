@@ -60,7 +60,7 @@ int main() {
 
     string not_found = " not found\n";
 
-    string path_command = get_path(command);
+    string path_command = get_path(arg);
 
     switch (string_to_commands(command)) {
 
