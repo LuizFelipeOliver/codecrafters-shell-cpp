@@ -85,6 +85,7 @@ int main() {
       if (!path_command.empty()) {
         string full_command = command + "" + arg;
         int result = system(full_command.c_str());
+        cout << 0;
       }
 
       break;
