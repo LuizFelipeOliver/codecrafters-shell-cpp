@@ -75,7 +75,6 @@ int main() {
         cout << arg << " is " << path_command << std::endl;
       } else {
         cout << arg << ":" << not_found;
-        cout << arg << " is " << path_command << std::endl;
       }
       break;
 
@@ -83,7 +82,7 @@ int main() {
       return 0;
       break;
     case invalid:
-      if (!path_command.empty()) {
+      if (!get_path(command).empty()) {
         string full_command = command + " " + arg;
         int result = system(full_command.c_str());
       }
