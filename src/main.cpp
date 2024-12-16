@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum commands { type, echo, cd, quit, invalid };
+enum commands { type, echo, cd, quit, invalid, program };
 
 commands string_to_commands(string str) {
   if (str.find("type") != string::npos)
@@ -22,6 +22,8 @@ commands string_to_commands(string str) {
 
   if (str.find("exit") != string::npos)
     return quit;
+  if (getenv("PATH"))
+    return program;
 
   return invalid;
 }
@@ -68,14 +70,17 @@ int main() {
       break;
 
     case type:
-      if (string_to_commands(command) != invalid)
+      if (string_to_commands(command) != invalid) {
         cout << command << " is a shell builtin\n";
-      else if (!path_command.empty())
-        cout << command << " is " << path_command << std::endl;
-      else
+      } else if (!path_command.empty()) {
+        cout << command << " is " << path_command << endl;
+      } else {
         cout << command << ":" << not_found;
+      }
       break;
-
+    case program:
+      cout << command << endl;
+      break;
     case quit:
       return 0;
       break;
