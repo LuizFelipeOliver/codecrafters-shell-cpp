@@ -82,7 +82,7 @@ int main() {
       break;
 
     default:
-      cout << get_path("PATH") << input << ": command" << not_found;
+      cout << path_command << input << ": command" << not_found;
       break;
     }
   }
