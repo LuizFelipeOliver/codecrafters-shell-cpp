@@ -99,7 +99,7 @@ int main() {
       if (!arg.empty()) {
         string directory;
         directory = arg;
-
+        cout << arg << endl;
       } else {
         cout << arg << ": No such file or directory\n";
       }
