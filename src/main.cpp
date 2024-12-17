@@ -66,7 +66,7 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo:
-      cout << arg << "\n";
+      cout << arg.c_str() << "\n";
       break;
 
     case type:
