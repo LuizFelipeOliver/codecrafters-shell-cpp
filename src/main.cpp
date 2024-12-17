@@ -7,6 +7,7 @@
 #include <regex>
 #include <sstream>
 #include <string>
+#include <strstream>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -77,17 +78,23 @@ int main() {
     case echo: {
 
       if (arg.front() == '\'' && arg.back() == '\'') {
+
         replace_char(arg, '\'');
+
         stringstream ss(arg);
         string word;
-        string result;
+        ostrstream result;
+
+        bool first_word = true;
+
         while (ss >> word) {
-          if (!result.empty()) {
-            result += " ";
+          if (!first_word) {
+            result << " ";
           }
-          result += word;
+          result << word;
+          first_word = false;
         }
-        cout << result << "\n";
+        cout << result.str() << "\n";
       }
 
       replace_char(arg, '\"');
