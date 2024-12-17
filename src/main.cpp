@@ -64,6 +64,11 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
+      bool inside_quotes;
+      if ((arg.front() == '\'' || arg.front() == '\"') &&
+          (arg.back() == '\'' || arg.back() == '\"')) {
+        inside_quotes = true;
+      }
       char replace_quotes = '\'';
 
       string replace_by = "";
@@ -75,17 +80,21 @@ int main() {
         pos = arg.find(replace_quotes, pos + 1);
       };
 
-      stringstream ss(arg);
-      string word;
-      string result;
-      while (ss >> word) {
-        if (!result.empty()) {
-          result += " ";
-        }
-        result += word;
-      }
-      cout << result << "\n";
+      if (inside_quotes) {
 
+        stringstream ss(arg);
+        string word;
+        string result;
+        while (ss >> word) {
+          if (!result.empty()) {
+            result += " ";
+          }
+          result += word;
+        }
+        cout << result << "\n";
+      } else {
+        cout << arg << "\n";
+      }
       break;
     }
     case type: {
