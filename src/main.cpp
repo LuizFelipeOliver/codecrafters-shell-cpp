@@ -56,14 +56,15 @@ int main() {
     string command;
 
     iss >> command;
-    string arg = input.substr(command.size() + 1);
+    string arg;
+    if (input.size() > command.size() + 1)
+      arg = input.substr(command.size() + 1);
 
     string not_found = " not found\n";
 
     string path_command = get_path(arg);
 
     switch (string_to_commands(command)) {
-
     case echo:
       cout << arg << "\n";
       break;
