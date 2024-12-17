@@ -74,6 +74,29 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
+      bool inside_quotes = false;
+      string word;
+      string result;
+      while (!arg.empty()) {
+        if (arg.front() == '\'' && arg.back() == '\'') {
+          inside_quotes = true;
+        }
+
+        if (inside_quotes) {
+          result += word + " ";
+        } else {
+          if (!result.empty()) {
+            result += " ";
+          }
+          result += word;
+        }
+
+        if (word.back() == '"') {
+          inside_quotes = false;
+        }
+      }
+      replace_char(result, '\'');
+      cout << result << "\n";
 
       if (arg.front() == '\'' && arg.back() == '\'') {
 
@@ -97,7 +120,6 @@ int main() {
 
       replace_char(arg, '\"');
 
-      cout << arg << "\n";
       break;
     }
     case type: {
