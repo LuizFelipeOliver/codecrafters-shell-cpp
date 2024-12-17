@@ -7,7 +7,6 @@
 #include <sstream>
 #include <string>
 #include <strstream>
-#include <type_traits>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -96,22 +95,10 @@ int main() {
         }
         cout << result.str() << "\n";
       }
-      if (arg.front() == '\"' && arg.back() == '\"') {
-        std::istringstream ss(arg);
 
-        std::string word;
-        std::ostringstream result;
+      replace_char(arg, '\"');
 
-        bool first_word = true;
-        while (ss >> word) {
-          if (!first_word) {
-            result << " ";
-          }
-          result << word;
-          first_word = false;
-        }
-        cout << result.str() << endl;
-      }
+      cout << arg << "\n";
       break;
     }
     case type: {
