@@ -101,18 +101,19 @@ int main() {
 
         std::istringstream ss(arg);
         std::string word;
-        std::ostringstream
-            result; // Usamos o ostringstream para armazenar a string resultante
+        std::ostringstream result;
 
         bool first_word = true;
         while (ss >> word) {
           if (!first_word) {
-            result << " "; // Adiciona espaço entre as palavras
+            result << " ";
           }
-          result << word; // Adiciona a palavra ao resultado
+          result << word;
           first_word = false;
+        };
+        if (arg.front() == '\"' && arg.back() == '\"') {
+          arg = arg.substr(1, arg.size() - 2);
         }
-        replace_char(result.str(), '\'');
         std::cout << result.str() << "\n";
       }
 
