@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <iostream>
 #include <ostream>
+#include <regex>
 #include <sstream>
 #include <string>
 #include <unistd.h>
@@ -25,6 +26,16 @@ string get_path(string command) {
     }
   }
   return "";
+}
+
+void replace_char(string &str, const char replace_char) {
+
+  size_t pos = str.find(replace_char);
+
+  while (pos != string::npos) {
+    str.erase(pos, 1);
+    pos = str.find(replace_char, pos);
+  };
 }
 
 enum commands { pwd, type, echo, cd, quit, invalid };
@@ -69,23 +80,8 @@ int main() {
         inside_quotes = true;
       }
 
-      char replace_quotes = '\'';
-      char replace_double_quotes = '\"';
-
-      string replace_by = "";
-
-      size_t pos = arg.find(replace_quotes);
-
-      while (pos != string::npos) {
-        arg.replace(pos, 1, replace_by);
-        pos = arg.find(replace_quotes, pos + 1);
-      };
-
-      size_t pos_double = arg.find(replace_double_quotes);
-      while (pos_double != string::npos) {
-        arg.replace(pos_double, 1, replace_by);
-        pos_double = arg.find(replace_double_quotes, pos_double + 1);
-      };
+      replace_char(arg, '\"');
+      replace_char(arg, '\'');
 
       if (!inside_quotes) {
         stringstream ss(arg);
