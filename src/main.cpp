@@ -64,10 +64,10 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-      bool inside_quotes;
+      bool inside_quotes = false;
       if ((arg.front() == '\'' || arg.front() == '\"') &&
           (arg.back() == '\'' || arg.back() == '\"')) {
-        inside_quotes = false;
+        inside_quotes = true;
       }
       char replace_quotes = '\'';
 
