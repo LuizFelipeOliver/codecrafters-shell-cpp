@@ -71,8 +71,8 @@ int main() {
       size_t pos = arg.find(replace_quotes);
 
       while (pos != string::npos) {
-        arg.replace(pos, replace_quotes, replace_by);
-        pos = arg.find(replace_quotes, pos + replace_quotes);
+        arg.replace(pos, 1, replace_by);
+        pos = arg.find(replace_quotes, pos + 1);
       };
 
       cout << arg << "\n";
