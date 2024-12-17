@@ -96,20 +96,21 @@ int main() {
         }
         cout << result.str() << "\n";
       }
+      if (arg.front() == '\"' && arg.back() == '\"') {
+        replace_char(arg, '\"');
+        std::istringstream ss(arg);
+        std::string word;
+        std::ostringstream result;
 
-      replace_char(arg, '\"');
-      std::istringstream ss(arg);
-      std::string word;
-      std::ostringstream result;
-
-      bool first_word = true;
-      while (ss >> word) {
-        if (!first_word) {
-          result << " ";
+        bool first_word = true;
+        while (ss >> word) {
+          if (!first_word) {
+            result << " ";
+          }
+          result << word;
+          first_word = false;
+          cout << result.str() << endl;
         }
-        result << word;
-        first_word = false;
-        cout << result.str() << endl;
       }
       break;
     }
