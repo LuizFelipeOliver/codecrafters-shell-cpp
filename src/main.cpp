@@ -100,12 +100,12 @@ int main() {
         const char *home_dir = getenv("HOME");
         if (chdir(home_dir) != 0) {
         }
-      }
+      } else {
 
-      if (chdir(arg.c_str()) != 0) {
-        cout << arg << ": No such file or directory\n";
+        if (chdir(arg.c_str()) != 0) {
+          cout << arg << ": No such file or directory\n";
+        }
       }
-
       break;
     default:
       cout << command << ": command" << not_found;
