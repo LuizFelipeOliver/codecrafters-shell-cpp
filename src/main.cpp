@@ -85,7 +85,7 @@ int main() {
         }
         result += word;
       }
-      cout << arg << "\n";
+      cout << result << "\n";
 
       break;
     }
