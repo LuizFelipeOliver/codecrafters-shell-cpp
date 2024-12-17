@@ -64,12 +64,28 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-      const int ECHO_LEN = 5;
-      string text = input.substr(ECHO_LEN);
-      if (arg.front() == '\'' && text.back() == '\'') {
-        cout << arg.substr(1, arg.size() - 2) << endl;
+      char replace_quotes = '\'';
+      char replace_double_quotes = '\"';
+
+      string replace_by = "";
+
+      size_t pos = arg.find(replace_quotes);
+
+      while (pos != string::npos) {
+        arg.replace(pos, 1, replace_by);
+        pos = arg.find(replace_quotes, pos + 1);
+      };
+
+      stringstream ss(arg);
+      string word;
+      string result;
+      while (ss >> word) {
+        if (!result.empty()) {
+          result += " ";
+        }
+        result += word;
       }
-      cout << arg << "\n";
+      cout << result << "\n";
 
       break;
     }
