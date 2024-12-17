@@ -79,6 +79,7 @@ int main() {
       for (int i = 0; i < arg.length(); i++) {
         if (arg[i] == ' ') {
           arg.erase(i, 1);
+          arg += ' ';
         }
       }
 
