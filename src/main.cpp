@@ -82,9 +82,9 @@ int main() {
       };
 
       size_t pos_double = arg.find(replace_double_quotes);
-      while (pos != string::npos) {
+      while (pos_double != string::npos) {
         arg.replace(pos_double, 1, replace_by);
-        pos_double = arg.find(replace_double_quotes, pos + 1);
+        pos_double = arg.find(replace_double_quotes, pos_double + 1);
       };
 
       if (!inside_quotes) {
