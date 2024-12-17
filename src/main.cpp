@@ -105,7 +105,7 @@ int main() {
         bool first_word = true;
         while (ss >> word) {
           if (!first_word) {
-            result << " ";
+            result << "";
           }
           result << word;
           first_word = false;
