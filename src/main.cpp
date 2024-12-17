@@ -100,6 +100,11 @@ int main() {
         cout << arg << ": No such file or directory\n";
       }
 
+      if (arg == "~") {
+        if (chdir(getenv("HOME")) != 0) {
+          cout << arg << ": No such file or directory\n";
+        }
+      }
       break;
     default:
       cout << command << ": command" << not_found;
