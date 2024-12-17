@@ -1,4 +1,6 @@
 #include <cerrno>
+#include <complex>
+#include <cstddef>
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
@@ -93,6 +95,18 @@ int main() {
           first_word = false;
         }
         cout << result << "\n";
+      }
+
+      bool inQuotes = false;
+      for (size_t i = 0; i < arg.length(); i++) {
+        if (arg[i] == '"') {
+          inQuotes = !inQuotes;
+        }
+
+        if (inQuotes && arg[i] == ' ') {
+          arg.erase(i, 1);
+          --i;
+        }
       }
 
       replace_char(arg, '\"');
