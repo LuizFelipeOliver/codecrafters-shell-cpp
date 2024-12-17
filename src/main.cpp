@@ -117,7 +117,6 @@ int main() {
         cout << result.str() << "\n";
       }
 
-      cout << arg << "\n";
       break;
     }
     case type: {
