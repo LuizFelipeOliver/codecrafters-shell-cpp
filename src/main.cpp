@@ -97,7 +97,8 @@ int main() {
 
     case cd:
       if (arg == "~") {
-        if (chdir(getenv("HOME")) != 0) {
+        const char *home_dir = getenv("HOME");
+        if (chdir(home_dir) != 0) {
           cout << arg << ": No such file or directory\n";
         }
       }
