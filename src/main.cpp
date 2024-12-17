@@ -75,8 +75,8 @@ int main() {
         pos = arg.find(replace_quotes, pos + 1);
       };
 
-      if ((arg.front() == '\'' || arg.front() == '\"') &&
-          (arg.back() == '\'' || arg.back() == '\"')) {
+      if (!(arg.front() == '\'' || arg.front() == '\"') &&
+          !(arg.back() == '\'' || arg.back() == '\"')) {
 
         stringstream ss(arg);
         string word;
