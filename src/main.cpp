@@ -97,15 +97,16 @@ int main() {
         cout << result.str() << "\n";
       }
       if (arg.front() == '\"' && arg.back() == '\"') {
-        replace_char(arg, '\"');
         std::istringstream ss(arg);
+
+        replace_char(ss, '\"');
         std::string word;
         std::ostringstream result;
 
         bool first_word = true;
         while (ss >> word) {
           if (!first_word) {
-            result << "";
+            result << " ";
           }
           result << word;
           first_word = false;
