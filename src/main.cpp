@@ -97,10 +97,9 @@ int main() {
         cout << result.str() << "\n";
       }
 
-      replace_char(arg, '\'');
-
       if (arg.front() == '\"' && arg.back() == '\"') {
 
+        replace_char(arg, '\'');
         std::istringstream ss(arg);
         std::string word;
         std::ostringstream result;
