@@ -97,7 +97,6 @@ int main() {
 
     case cd:
       if (chdir(arg.c_str()) != 0) {
-
         cout << arg << ": No such file or directory\n";
       }
 
