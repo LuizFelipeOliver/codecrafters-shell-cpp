@@ -89,7 +89,7 @@ int main() {
       };
 
       if (!inside_quotes) {
-
+        /*
         stringstream ss(arg);
         string word;
         string result;
@@ -99,7 +99,7 @@ int main() {
           }
           result += word;
         }
-        cout << result << "\n";
+        cout << result << "\n";*/
       } else {
         cout << arg << "\n";
       }
