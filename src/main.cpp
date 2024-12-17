@@ -86,7 +86,8 @@ int main() {
         string full_command = command + " " + arg;
         int result = system(full_command.c_str());
       }
-      cout << command << ": command" << not_found;
+      if (get_path(command).empty())
+        cout << command << ": command" << not_found;
       break;
     default:
       cout << command << ": command" << not_found;
