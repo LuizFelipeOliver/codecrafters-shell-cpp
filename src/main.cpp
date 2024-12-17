@@ -94,6 +94,16 @@ int main() {
     case pwd:
       cout << filesystem::current_path().string() << endl;
       break;
+
+    case cd:
+      if (!arg.empty()) {
+        int directory;
+        directory = chdir(arg);
+      } else {
+        cout << arg << ": No such file or directory\n";
+      }
+
+      break;
     default:
       cout << command << ": command" << not_found;
       break;
