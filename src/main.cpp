@@ -64,14 +64,18 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-
       char replace_single_quotes = '\'';
+
       string replace_by = "";
+
       size_t pos = arg.find(replace_single_quotes);
+
       do {
-        arg.replace(pos, replace_single_quotes, replace_by);
+        arg.replace(pos, 1, replace_by);
       } while (pos != string::npos);
+
       cout << arg << "\n";
+
       break;
     }
     case type: {
