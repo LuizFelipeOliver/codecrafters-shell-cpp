@@ -6,7 +6,6 @@
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <strstream>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -82,18 +81,18 @@ int main() {
 
         stringstream ss(arg);
         string word;
-        ostrstream result;
+        string result;
 
         bool first_word = true;
 
         while (ss >> word) {
           if (!first_word) {
-            result << " ";
+            result += " ";
           }
-          result << word;
+          result += word;
           first_word = false;
         }
-        cout << result.str() << "\n";
+        cout << result << "\n";
       }
 
       replace_char(arg, '\"');
