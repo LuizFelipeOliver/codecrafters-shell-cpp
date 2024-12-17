@@ -65,8 +65,7 @@ int main() {
     switch (string_to_commands(command)) {
     case echo: {
       bool inside_quotes = false;
-      if ((arg.front() == '\'' || arg.front() == '\"') &&
-          (arg.back() == '\'' || arg.back() == '\"')) {
+      if ((arg.front() == '\'') && (arg.back() == '\'')) {
         inside_quotes = true;
       }
 
@@ -89,7 +88,6 @@ int main() {
       };
 
       if (!inside_quotes) {
-
         stringstream ss(arg);
         string word;
         string result;
