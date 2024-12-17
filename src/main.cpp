@@ -64,21 +64,45 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
+      bool inside_quotes = false;
       if ((arg.front() == '\'' || arg.front() == '\"') &&
           (arg.back() == '\'' || arg.back() == '\"')) {
-        arg = arg.substr(1, arg.size() - 2);
+        inside_quotes = true;
       }
 
-      stringstream ss(arg);
-      string message;
-      string result;
-      while (ss >> message) {
-        if (!result.empty()) {
-          result += message;
+      char replace_quotes = '\'';
+      char replace_double_quotes = '\"';
+
+      string replace_by = "";
+
+      size_t pos = arg.find(replace_quotes);
+
+      while (pos != string::npos) {
+        arg.replace(pos, 1, replace_by);
+        pos = arg.find(replace_quotes, pos + 1);
+      };
+
+      size_t pos_double = arg.find(replace_double_quotes);
+      while (pos_double != string::npos) {
+        arg.replace(pos_double, 1, replace_by);
+        pos_double = arg.find(replace_double_quotes, pos_double + 1);
+      };
+
+      if (!inside_quotes) {
+
+        stringstream ss(arg);
+        string word;
+        string result;
+        while (ss >> word) {
+          if (!result.empty()) {
+            result += " ";
+          }
+          result += word;
         }
-        result += message;
+        cout << result << "\n";
+      } else {
+        cout << arg << "\n";
       }
-      cout << result << endl;
       break;
     }
     case type: {
