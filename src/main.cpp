@@ -97,9 +97,25 @@ int main() {
         cout << result.str() << "\n";
       }
 
-      replace_char(arg, '\"');
+      if (arg.front() == '\"' && arg.back() == '\"') {
 
-      cout << arg << "\n";
+        std::istringstream ss(arg);
+        std::string word;
+        std::ostringstream
+            result; // Usamos o ostringstream para armazenar a string resultante
+
+        bool first_word = true;
+        while (ss >> word) {
+          if (!first_word) {
+            result << " "; // Adiciona espaço entre as palavras
+          }
+          result << word; // Adiciona a palavra ao resultado
+          first_word = false;
+        }
+        replace_char(result.str(), '\'');
+        std::cout << result.str() << "\n";
+      }
+
       break;
     }
     case type: {
