@@ -92,7 +92,7 @@ int main() {
       break;
 
     case pwd:
-      filesystem::current_path(command);
+      cout << filesystem::current_path().string() << endl;
       break;
     default:
       cout << command << ": command" << not_found;
