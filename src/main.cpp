@@ -99,7 +99,6 @@ int main() {
       if (arg.front() == '\"' && arg.back() == '\"') {
         std::istringstream ss(arg);
 
-        replace_char(ss, '\"');
         std::string word;
         std::ostringstream result;
 
