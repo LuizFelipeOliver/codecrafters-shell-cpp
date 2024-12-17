@@ -97,6 +97,8 @@ int main() {
         cout << result.str() << "\n";
       }
 
+      replace_char(arg, '\'');
+
       if (arg.front() == '\"' && arg.back() == '\"') {
 
         std::istringstream ss(arg);
@@ -111,9 +113,6 @@ int main() {
           result << word;
           first_word = false;
         };
-        if (arg.front() == '\"' && arg.back() == '\"') {
-          arg = arg.substr(1, arg.size() - 2);
-        }
         std::cout << result.str() << "\n";
       }
 
