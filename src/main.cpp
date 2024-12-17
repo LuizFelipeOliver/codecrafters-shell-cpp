@@ -62,21 +62,21 @@ int main() {
 
     string not_found = " not found\n";
 
-    string path_command = get_path(arg);
-
     switch (string_to_commands(command)) {
-    case echo:
+    case echo: {
+
       char replace_single_quotes = '\'';
       string replace_by = "";
       size_t pos = arg.find(replace_single_quotes);
-
       do {
         arg.replace(pos, replace_single_quotes, replace_by);
       } while (pos != string::npos);
       cout << arg << "\n";
       break;
+    }
+    case type: {
+      string path_command = get_path(arg);
 
-    case type:
       if (string_to_commands(arg) != invalid) {
         cout << arg << " is a shell builtin\n";
       } else if (!path_command.empty()) {
@@ -85,25 +85,26 @@ int main() {
         cout << arg << ":" << not_found;
       }
       break;
-
-    case quit:
+    }
+    case quit: {
       return 0;
       break;
-
-    case invalid:
+    }
+    case invalid: {
       if (!get_path(command).empty()) {
         string full_command = command + " " + arg;
         int result = system(full_command.c_str());
       }
+
       if (get_path(command).empty())
         cout << command << ": command" << not_found;
       break;
-
-    case pwd:
+    }
+    case pwd: {
       cout << filesystem::current_path().string() << endl;
       break;
-
-    case cd:
+    }
+    case cd: {
       if (arg == "~") {
         const char *home_dir = getenv("HOME");
         if (chdir(home_dir) != 0) {
@@ -115,10 +116,11 @@ int main() {
         }
       }
       break;
-
-    default:
+    }
+    default: {
       cout << command << ": command" << not_found;
       break;
+    }
     }
   }
   return 0;
