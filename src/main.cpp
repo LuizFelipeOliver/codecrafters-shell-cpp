@@ -80,7 +80,7 @@ int main() {
         pos = arg.find(replace_quotes, pos + 1);
       };
 
-      if (inside_quotes) {
+      if (!inside_quotes) {
 
         stringstream ss(arg);
         string word;
