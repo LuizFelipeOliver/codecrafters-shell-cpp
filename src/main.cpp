@@ -75,22 +75,17 @@ int main() {
         pos = arg.find(replace_quotes, pos + 1);
       };
 
-      if (!(arg.front() == '\'' || arg.front() == '\"') &&
-          !(arg.back() == '\'' || arg.back() == '\"')) {
-
-        stringstream ss(arg);
-        string word;
-        string result;
-        while (ss >> word) {
-          if (!result.empty()) {
-            result += " ";
-          }
-          result += word;
+      stringstream ss(arg);
+      string word;
+      string result;
+      while (ss >> word) {
+        if (!result.empty()) {
+          result += " ";
         }
-        cout << result << "\n";
-      } else {
-        cout << arg << "\n";
+        result += word;
       }
+      cout << result << "\n";
+
       break;
     }
     case type: {
