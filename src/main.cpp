@@ -72,6 +72,7 @@ int main() {
 
       do {
         arg.replace(pos, 1, replace_by);
+        pos = arg.find(replace_single_quotes, pos);
       } while (pos != string::npos);
 
       cout << arg << "\n";
