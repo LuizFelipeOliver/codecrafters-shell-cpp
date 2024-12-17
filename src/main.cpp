@@ -74,7 +74,6 @@ int main() {
       while (pos != string::npos) {
         arg.replace(pos, 1, replace_by);
         pos = arg.find(replace_quotes, pos + 1);
-        pos = arg.find(replace_double_quotes, pos + 1);
       };
 
       cout << arg << "\n";
