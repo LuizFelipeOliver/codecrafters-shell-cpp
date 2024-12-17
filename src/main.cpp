@@ -27,10 +27,10 @@ string get_path(string command) {
   return "";
 }
 
-enum commands { type, echo, cd, quit, invalid };
+enum commands { pwd, type, echo, cd, quit, invalid };
 
 unordered_map<string, commands> command_map = {
-    {"type", type}, {"echo", echo}, {"cd", cd}, {"exit", quit}};
+    {"type", type}, {"echo", echo}, {"cd", cd}, {"exit", quit}, {"pwd", pwd}};
 
 commands string_to_commands(const string &str) {
   auto it = command_map.find(str);
@@ -89,6 +89,10 @@ int main() {
       }
       if (get_path(command).empty())
         cout << command << ": command" << not_found;
+      break;
+
+    case pwd:
+      filesystem::current_path(command);
       break;
     default:
       cout << command << ": command" << not_found;
