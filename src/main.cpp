@@ -67,7 +67,7 @@ int main() {
       bool inside_quotes;
       if ((arg.front() == '\'' || arg.front() == '\"') &&
           (arg.back() == '\'' || arg.back() == '\"')) {
-        inside_quotes = true;
+        inside_quotes = false;
       }
       char replace_quotes = '\'';
 
