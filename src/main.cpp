@@ -65,6 +65,7 @@ int main() {
     switch (string_to_commands(command)) {
     case echo: {
       char replace_quotes = '\'';
+      char replace_double_quotes = '\"';
 
       string replace_by = "";
 
@@ -73,6 +74,7 @@ int main() {
       while (pos != string::npos) {
         arg.replace(pos, 1, replace_by);
         pos = arg.find(replace_quotes, pos + 1);
+        pos = arg.find(replace_double_quotes, pos + 1);
       };
 
       cout << arg << "\n";
