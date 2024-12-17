@@ -8,6 +8,7 @@
 #include <string>
 #include <unistd.h>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -25,6 +26,42 @@ string get_path(string command) {
     }
   }
   return "";
+}
+
+vector<string> parse_arguments(const string &input) {
+  vector<string> args;
+  string arg;
+  bool in_quotes = false;
+  char quote_char = '\0';
+
+  for (size_t i = 0; i < input.size(); ++i) {
+    char ch = input[i];
+
+    if (in_quotes) {
+      if (ch == quote_char) {
+        in_quotes = false; // Fechando aspas
+      } else {
+        arg += ch; // Parte do argumento
+      }
+    } else {
+      if (ch == '\'' || ch == '\"') {
+        in_quotes = true;
+        quote_char = ch; // Abrindo aspas
+      } else if (ch == ' ') {
+        if (!arg.empty()) {
+          args.push_back(arg);
+          arg.clear();
+        }
+      } else {
+        arg += ch; // Construindo argumento
+      }
+    }
+  }
+
+  if (!arg.empty()) {
+    args.push_back(arg);
+  }
+  return args;
 }
 
 enum commands { pwd, type, echo, cd, quit, invalid };
@@ -64,24 +101,12 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-      bool inside_quotes = arg.front() == '\'' && arg.back() == '\'';
-
-      arg.erase(remove(arg.begin(), arg.end(), '\''), arg.end());
-      arg.erase(remove(arg.begin(), arg.end(), '\"'), arg.end());
-
-      if (!inside_quotes) {
-        istringstream ss(arg);
-        string word, result;
-
-        while (ss >> word) {
-          if (!result.empty())
-            result += "";
-          result += word;
-        }
-        cout << result << endl;
-      } else {
-        cout << arg << endl;
+      for (size_t i = 0; i < arg.size(); ++i) {
+        if (i > 0)
+          cout << " ";
+        cout << arg[i];
       }
+      cout << "\n";
       break;
     }
     case type: {
