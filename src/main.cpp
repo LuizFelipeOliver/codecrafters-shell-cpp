@@ -66,7 +66,14 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo:
-      cout << arg.c_str() << "\n";
+      char replace_single_quotes = '\'';
+      string replace_by = "";
+      size_t pos = arg.find(replace_single_quotes);
+
+      do {
+        arg.replace(pos, replace_single_quotes, replace_by);
+      } while (pos != string::npos);
+      cout << arg << "\n";
       break;
 
     case type:
@@ -82,6 +89,7 @@ int main() {
     case quit:
       return 0;
       break;
+
     case invalid:
       if (!get_path(command).empty()) {
         string full_command = command + " " + arg;
@@ -107,6 +115,7 @@ int main() {
         }
       }
       break;
+
     default:
       cout << command << ": command" << not_found;
       break;
