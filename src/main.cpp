@@ -98,58 +98,72 @@ int main() {
       }
 
       replace_char(arg, '\"');
+      stringstream ss(arg);
+      string word;
+      ostrstream result;
 
-      cout << arg << "\n";
-      break;
-    }
-    case type: {
-      string path_command = get_path(arg);
+      bool first_word = true;
 
-      if (string_to_commands(arg) != invalid) {
-        cout << arg << " is a shell builtin\n";
-      } else if (!path_command.empty()) {
-        cout << arg << " is " << path_command << std::endl;
-      } else {
-        cout << arg << ":" << not_found;
-      }
-      break;
-    }
-    case quit: {
-      return 0;
-      break;
-    }
-    case invalid: {
-      if (!get_path(command).empty()) {
-        string full_command = command + " " + arg;
-        int result = system(full_command.c_str());
-      }
-
-      if (get_path(command).empty())
-        cout << command << ": command" << not_found;
-      break;
-    }
-    case pwd: {
-      cout << filesystem::current_path().string() << endl;
-      break;
-    }
-    case cd: {
-      if (arg == "~") {
-        const char *home_dir = getenv("HOME");
-        if (chdir(home_dir) != 0) {
+      while (ss >> word) {
+        if (!first_word) {
+          result << " ";
         }
-      } else {
-
-        if (chdir(arg.c_str()) != 0) {
-          cout << arg << ": No such file or directory\n";
-        }
+        result << word;
+        first_word = false;
       }
-      break;
+      cout << result.str() << "\n";
     }
-    default: {
-      cout << command << ": command" << not_found;
-      break;
+
+    break;
     }
+  case type: {
+    string path_command = get_path(arg);
+
+    if (string_to_commands(arg) != invalid) {
+      cout << arg << " is a shell builtin\n";
+    } else if (!path_command.empty()) {
+      cout << arg << " is " << path_command << std::endl;
+    } else {
+      cout << arg << ":" << not_found;
     }
+    break;
   }
-  return 0;
+  case quit: {
+    return 0;
+    break;
+  }
+  case invalid: {
+    if (!get_path(command).empty()) {
+      string full_command = command + " " + arg;
+      int result = system(full_command.c_str());
+    }
+
+    if (get_path(command).empty())
+      cout << command << ": command" << not_found;
+    break;
+  }
+  case pwd: {
+    cout << filesystem::current_path().string() << endl;
+    break;
+  }
+  case cd: {
+    if (arg == "~") {
+      const char *home_dir = getenv("HOME");
+      if (chdir(home_dir) != 0) {
+      }
+    } else {
+
+      if (chdir(arg.c_str()) != 0) {
+        cout << arg << ": No such file or directory\n";
+      }
+    }
+    break;
+  }
+  default: {
+    cout << command << ": command" << not_found;
+    break;
+  }
+  }
+}
+return 0;
 }
