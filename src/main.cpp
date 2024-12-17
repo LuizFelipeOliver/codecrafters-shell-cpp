@@ -27,6 +27,27 @@ string get_path(string command) {
   return "";
 }
 
+void remove_quotes(const string &input) {
+  stringstream ss(input);
+  string arg, result;
+  bool inside_quotes = false;
+
+  while (ss >> arg) {
+    string processed = arg;
+
+    if ((arg.front() == '\'' || arg.back() == '\"')) {
+      processed = arg.substr(1, arg.size() - 2);
+    }
+
+    if (result.empty()) {
+      result = processed;
+    } else {
+      result += " " + processed;
+    }
+  }
+  cout << result << endl;
+}
+
 enum commands { pwd, type, echo, cd, quit, invalid };
 
 unordered_map<string, commands> command_map = {
@@ -64,45 +85,7 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-      bool inside_quotes = false;
-
-      if ((arg.front() == '\'' || arg.front() == '\"') &&
-          (arg.back() == '\'' || arg.back() == '\"')) {
-        inside_quotes = true;
-      }
-
-      char replace_quotes = '\'';
-      char replace_double_quotes = '\"';
-
-      string replace_by = "";
-
-      size_t pos = arg.find(replace_quotes);
-
-      while (pos != string::npos) {
-        arg.replace(pos, 1, replace_by);
-        pos = arg.find(replace_quotes, pos + 1);
-      };
-
-      size_t pos_double = arg.find(replace_double_quotes);
-      while (pos_double != string::npos) {
-        arg.replace(pos_double, 1, replace_by);
-        pos_double = arg.find(replace_double_quotes, pos_double + 1);
-      };
-
-      if (!inside_quotes) {
-        stringstream ss(arg);
-        string word;
-        string result;
-        while (ss >> word) {
-          if (!result.empty()) {
-            result += " ";
-          }
-          result += word;
-        }
-        cout << result << "\n";
-      } else {
-        cout << arg << "\n";
-      }
+      remove_quotes(arg);
       break;
     }
     case type: {
