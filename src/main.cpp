@@ -6,6 +6,7 @@
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <strstream>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -75,6 +76,16 @@ int main() {
         arg.replace(pos, 1, replace_by);
         pos = arg.find(replace_quotes, pos + 1);
       };
+
+      istringstream iss(arg);
+      string word;
+      string result;
+      while (iss >> word) {
+        if (!result.empty()) {
+          result += " ";
+        }
+        result += word;
+      }
 
       cout << arg << "\n";
 
