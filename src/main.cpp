@@ -75,18 +75,24 @@ int main() {
 
       string replace_by = "";
 
-      if (inside_quotes) {
-        if (arg.front() == '\'' || arg.front() == '\"') {
-          arg = arg.substr(1, arg.length() - 2);
-        }
-      }
+      size_t pos = arg.find(replace_quotes);
+
+      while (pos != string::npos) {
+        arg.replace(pos, 1, replace_by);
+        pos = arg.find(replace_quotes, pos + 1);
+      };
+
+      size_t pos_double = arg.find(replace_double_quotes);
+      while (pos_double != string::npos) {
+        arg.replace(pos_double, 1, replace_by);
+        pos_double = arg.find(replace_double_quotes, pos_double + 1);
+      };
 
       if (!inside_quotes) {
 
         stringstream ss(arg);
         string word;
         string result;
-
         while (ss >> word) {
           if (!result.empty()) {
             result += " ";
