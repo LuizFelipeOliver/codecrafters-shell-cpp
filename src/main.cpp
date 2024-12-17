@@ -75,15 +75,9 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-      bool inside_quotes = false;
+
       if (arg.front() == '\'' && arg.back() == '\'') {
-        inside_quotes = true;
-      }
-
-      replace_char(arg, '\"');
-      replace_char(arg, '\'');
-
-      if (!inside_quotes) {
+        replace_char(arg, '\'');
         stringstream ss(arg);
         string word;
         string result;
@@ -94,9 +88,11 @@ int main() {
           result += word;
         }
         cout << result << "\n";
-      } else {
-        cout << arg << "\n";
       }
+
+      replace_char(arg, '\"');
+
+      cout << arg << "\n";
       break;
     }
     case type: {
