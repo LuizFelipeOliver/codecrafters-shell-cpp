@@ -69,6 +69,12 @@ int main() {
           (arg.back() == '\'' || arg.back() == '\"')) {
         inside_quotes = true;
       }
+
+      if ((arg.front() == '\"' || arg.front() == '\"') &&
+          (arg.back() == '\"' || arg.back() == '\"')) {
+        inside_quotes = true;
+      }
+
       char replace_quotes = '\'';
       char replace_double_quotes = '\"';
 
