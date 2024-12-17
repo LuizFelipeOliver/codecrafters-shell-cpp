@@ -96,11 +96,8 @@ int main() {
       break;
 
     case cd:
-      if (!arg.empty()) {
-        string directory;
-        directory = arg;
-        cout << arg << endl;
-      } else {
+      if (chdir(arg.c_str()) != 0) {
+
         cout << arg << ": No such file or directory\n";
       }
 
