@@ -76,13 +76,15 @@ int main() {
         pos = arg.find(replace_quotes, pos + 1);
       };
 
-      for (int i = 0; i < arg.length(); i++) {
-        if (arg[i] == ' ') {
-          arg.erase(i, 1);
-          arg += ' ';
+      stringstream ss(arg);
+      string word;
+      string result;
+      while (ss >> word) {
+        if (!result.empty()) {
+          result += " ";
         }
+        result += word;
       }
-
       cout << arg << "\n";
 
       break;
