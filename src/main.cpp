@@ -110,6 +110,7 @@ int main() {
           result << word;
           first_word = false;
         }
+        cout << result.str() << endl;
       }
       break;
     }
