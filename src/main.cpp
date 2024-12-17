@@ -8,7 +8,6 @@
 #include <string>
 #include <unistd.h>
 #include <unordered_map>
-#include <vector>
 
 using namespace std;
 
@@ -26,42 +25,6 @@ string get_path(string command) {
     }
   }
   return "";
-}
-
-vector<string> parse_arguments(const string &input) {
-  vector<string> args;
-  string arg;
-  bool in_quotes = false;
-  char quote_char = '\0';
-
-  for (size_t i = 0; i < input.size(); ++i) {
-    char ch = input[i];
-
-    if (in_quotes) {
-      if (ch == quote_char) {
-        in_quotes = false; // Fechando aspas
-      } else {
-        arg += ch; // Parte do argumento
-      }
-    } else {
-      if (ch == '\'' || ch == '\"') {
-        in_quotes = true;
-        quote_char = ch; // Abrindo aspas
-      } else if (ch == ' ') {
-        if (!arg.empty()) {
-          args.push_back(arg);
-          arg.clear();
-        }
-      } else {
-        arg += ch; // Construindo argumento
-      }
-    }
-  }
-
-  if (!arg.empty()) {
-    args.push_back(arg);
-  }
-  return args;
 }
 
 enum commands { pwd, type, echo, cd, quit, invalid };
@@ -101,12 +64,45 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-      for (size_t i = 0; i < arg.size(); ++i) {
-        if (i > 0)
-          cout << " ";
-        cout << arg[i];
+      bool inside_quotes = false;
+      if ((arg.front() == '\'' || arg.front() == '\"') &&
+          (arg.back() == '\'' || arg.back() == '\"')) {
+        inside_quotes = true;
       }
-      cout << "\n";
+
+      char replace_quotes = '\'';
+      char replace_double_quotes = '\"';
+
+      string replace_by = "";
+
+      size_t pos = arg.find(replace_quotes);
+
+      while (pos != string::npos) {
+        arg.replace(pos, 1, replace_by);
+        pos = arg.find(replace_quotes, pos + 1);
+      };
+
+      size_t pos_double = arg.find(replace_double_quotes);
+      while (pos_double != string::npos) {
+        arg.replace(pos_double, 1, replace_by);
+        pos_double = arg.find(replace_double_quotes, pos_double + 1);
+      };
+
+      if (!inside_quotes) {
+
+        stringstream ss(arg);
+        string word;
+        string result;
+        while (ss >> word) {
+          if (!result.empty()) {
+            result += " ";
+          }
+          result += word;
+        }
+        cout << result << "\n";
+      } else {
+        cout << arg << "\n";
+      }
       break;
     }
     case type: {
