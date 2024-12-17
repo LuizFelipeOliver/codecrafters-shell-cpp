@@ -27,27 +27,6 @@ string get_path(string command) {
   return "";
 }
 
-void remove_quotes(const string &input) {
-  stringstream ss(input);
-  string arg, result;
-  bool inside_quotes = false;
-
-  while (ss >> arg) {
-    string processed = arg;
-
-    if ((arg.front() == '\'' || arg.back() == '\"')) {
-      processed = arg.substr(1, arg.size() - 2);
-    }
-
-    if (result.empty()) {
-      result = processed;
-    } else {
-      result += " " + processed;
-    }
-  }
-  cout << result << endl;
-}
-
 enum commands { pwd, type, echo, cd, quit, invalid };
 
 unordered_map<string, commands> command_map = {
@@ -85,7 +64,24 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-      remove_quotes(arg);
+      bool inside_quotes = arg.front() == '\'' && arg.back() == '\'';
+
+      arg.erase(remove(arg.begin(), arg.end(), '\''), arg.end());
+      arg.erase(remove(arg.begin(), arg.end(), '\"'), arg.end());
+
+      if (!inside_quotes) {
+        istringstream ss(arg);
+        string word, result;
+
+        while (ss >> word) {
+          if (!result.empty())
+            result += "";
+          result += word;
+        }
+        cout << result << endl;
+      } else {
+        cout << arg << endl;
+      }
       break;
     }
     case type: {
