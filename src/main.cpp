@@ -97,26 +97,9 @@ int main() {
         cout << result.str() << "\n";
       }
 
-      if (arg.front() == '\"' && arg.back() == '\"') {
+      replace_char(arg, '\"');
 
-        replace_char(arg, '\"');
-
-        stringstream ss(arg);
-        string word;
-        ostrstream result;
-
-        bool first_word = true;
-
-        while (ss >> word) {
-          if (!first_word) {
-            result << " ";
-          }
-          result << word;
-          first_word = false;
-        }
-        cout << result.str() << "\n";
-      }
-
+      cout << arg << "\n";
       break;
     }
     case type: {
