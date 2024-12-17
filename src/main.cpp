@@ -4,10 +4,10 @@
 #include <filesystem>
 #include <iostream>
 #include <ostream>
-#include <regex>
 #include <sstream>
 #include <string>
 #include <strstream>
+#include <type_traits>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -98,8 +98,19 @@ int main() {
       }
 
       replace_char(arg, '\"');
+      std::istringstream ss(arg);
+      std::string word;
+      std::ostringstream result;
 
-      cout << arg << "\n";
+      bool first_word = true;
+      while (ss >> word) {
+        if (!first_word) {
+          result << " ";
+        }
+        result << word;
+        first_word = false;
+        cout << result.str() << endl;
+      }
       break;
     }
     case type: {
