@@ -52,6 +52,7 @@ vector<string> echoParse(const std::string &line) {
 
       current_token.push_back(ch);
       current_token.push_back(' ');
+      current_token.push_back(' ');
       escape_next = true;
       continue;
     }
