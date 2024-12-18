@@ -40,7 +40,7 @@ vector<string> echoParse(const std::string &line) {
 
     if (escape_next) {
       if (ch == ' ' || ch == '\\') {
-        current_token.push_back(' ');
+        current_token.push_back(ch);
       } else {
         current_token.push_back(ch);
       }
