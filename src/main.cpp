@@ -1,4 +1,6 @@
+#include <boost/tokenizer.hpp>
 #include <cerrno>
+#include <complex>
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
@@ -8,6 +10,7 @@
 #include <string>
 #include <unistd.h>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -27,14 +30,18 @@ string get_path(string command) {
   return "";
 }
 
-void replace_char(string &str, const char replace_char) {
+vector<string> echoParse(const std::string &line) {
+  boost::escaped_list_separator<char> separator('\\', ' ', '\"');
+  boost::tokenizer<boost::escaped_list_separator<char>> tokenize(line,
+                                                                 separator);
 
-  size_t pos = str.find(replace_char);
+  vector<string> args;
 
-  while (pos != string::npos) {
-    str.erase(pos, 1);
-    pos = str.find(replace_char, pos);
-  };
+  for (const auto &token : tokenize) {
+    args.push_back(token);
+  }
+
+  return args;
 }
 
 enum commands { pwd, type, echo, cd, quit, invalid };
@@ -74,52 +81,11 @@ int main() {
 
     switch (string_to_commands(command)) {
     case echo: {
-      bool inside_quotes = false;
-      string word;
-      string result;
-      while (!arg.empty()) {
-        if (arg.front() == '\'' && arg.back() == '\'') {
-          inside_quotes = true;
-        }
-
-        if (inside_quotes) {
-          result += word + " ";
-        } else {
-          if (!result.empty()) {
-            result += " ";
-          }
-          result += word;
-        }
-
-        if (word.back() == '"') {
-          inside_quotes = false;
-        }
+      vector<string> result = echoParse(arg);
+      for (const auto &arg : result) {
+        cout << arg << " ";
       }
-      replace_char(result, '\'');
-      cout << result << "\n";
-
-      if (arg.front() == '\'' && arg.back() == '\'') {
-
-        replace_char(arg, '\'');
-
-        stringstream ss(arg);
-        string word;
-        string result;
-
-        bool first_word = true;
-
-        while (ss >> word) {
-          if (!first_word) {
-            result += " ";
-          }
-          result += word;
-          first_word = false;
-        }
-        cout << result << "\n";
-      }
-
-      replace_char(arg, '\"');
-
+      cout << endl;
       break;
     }
     case type: {
