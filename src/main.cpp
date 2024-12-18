@@ -37,14 +37,14 @@ vector<string> echoParse(const std::string &line) {
 
   for (size_t i = 0; i < line.size(); ++i) {
     char ch = line[i];
-    /*
+
     if (escape_next) {
       if (i + 1 < line.size() && line[i + 1] == ' ') {
+        current_token.push_back(' ');
         i++;
         continue;
       }
 
-      current_token.push_back(' ');
       escape_next = false;
       continue;
     }
@@ -52,7 +52,7 @@ vector<string> echoParse(const std::string &line) {
     if (ch == '\\') {
       escape_next = true;
       continue;
-    }*/
+    }
 
     if (ch == '\"') {
       inside_quotes = !inside_quotes;
