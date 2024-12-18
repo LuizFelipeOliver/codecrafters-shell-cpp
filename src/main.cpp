@@ -52,6 +52,10 @@ vector<string> echoParse(const std::string &line) {
       inside_quotes = !inside_quotes;
       continue;
     }
+    if (ch == '\'') {
+      inside_quotes = !inside_quotes;
+      continue;
+    }
 
     if (!inside_quotes && ch == ' ') {
       if (!current_token.empty()) {
