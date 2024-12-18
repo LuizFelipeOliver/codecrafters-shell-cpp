@@ -31,14 +31,42 @@ string get_path(string command) {
 }
 
 vector<string> echoParse(const std::string &line) {
-  boost::escaped_list_separator<char> separator('\\', ' ', '\"');
-  boost::tokenizer<boost::escaped_list_separator<char>> tokenize(line,
-                                                                 separator);
+  std::vector<std::string> args;
+  std::string current_token;
+  bool inside_quotes = false;
+  bool escape_next = false;
 
-  vector<string> args;
+  for (size_t i = 0; i < line.size(); ++i) {
+    char ch = line[i];
 
-  for (const auto &token : tokenize) {
-    args.push_back(token);
+    if (escape_next) {
+      current_token.push_back(ch);
+      escape_next = false;
+      continue;
+    }
+
+    if (ch == '\\') {
+      escape_next = true;
+      continue;
+    }
+
+    if (ch == '\"') {
+      inside_quotes = !inside_quotes;
+      continue;
+    }
+
+    if (!inside_quotes && ch == ' ') {
+      if (!current_token.empty()) {
+        args.push_back(current_token);
+        current_token.clear();
+      }
+    } else {
+      current_token.push_back(ch);
+    }
+  }
+
+  if (!current_token.empty()) {
+    args.push_back(current_token);
   }
 
   return args;
