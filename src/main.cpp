@@ -29,6 +29,7 @@ string get_path(string command) {
 }
 
 vector<string> echoParse(const string &line) {
+  vector<string> args;
   string current_token;
   bool inside_quotes = false;
   bool escape_next = false;
