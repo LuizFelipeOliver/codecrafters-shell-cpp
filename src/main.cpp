@@ -39,11 +39,11 @@ vector<string> echoParse(const std::string &line) {
     char ch = line[i];
 
     if (escape_next) {
-      if (ch == ' ' || ch == '\\') {
-        current_token.push_back(ch);
-      } else {
-        current_token.push_back(ch);
+      if (i + 1 < line.size() && line[i + 1] == ' ') {
+        i++;
+        continue;
       }
+
       escape_next = false;
       continue;
     }
