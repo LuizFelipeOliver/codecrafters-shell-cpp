@@ -50,7 +50,6 @@ vector<string> echoParse(const std::string &line) {
         i++;
         continue;
       }
-
       escape_next = true;
       continue;
     }
