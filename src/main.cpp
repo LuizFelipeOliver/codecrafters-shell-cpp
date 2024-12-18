@@ -28,9 +28,8 @@ string get_path(string command) {
   return "";
 }
 
-vector<string> echoParse(const std::string &line) {
-  std::vector<std::string> args;
-  std::string current_token;
+vector<string> echoParse(const string &line) {
+  string current_token;
   bool inside_quotes = false;
   bool escape_next = false;
   bool inside_single_quotes = false;
