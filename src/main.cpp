@@ -42,7 +42,7 @@ vector<string> echoParse(const std::string &line) {
       if (i + 1 < line.size() && line[i + 1] == ' ' && i + 2 < line.size() &&
           line[i + 2] == ' ') {
         current_token.push_back(' ');
-        i += 2;
+        i++;
         continue;
       }
       escape_next = false;
