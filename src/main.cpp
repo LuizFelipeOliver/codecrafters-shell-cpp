@@ -40,16 +40,24 @@ vector<string> echoParse(const std::string &line) {
 
     if (escape_next) {
       if (i + 1 < line.size() && line[i + 1] == ' ') {
+
         current_token.push_back(' ');
         i++;
         continue;
       }
-
+      current_token.push_back(ch);
       escape_next = false;
       continue;
     }
 
     if (ch == '\\') {
+      if (i + 1 < line.size() && line[i + 1] == ' ') {
+
+        current_token.push_back(' ');
+        i++;
+        continue;
+      }
+
       escape_next = true;
       continue;
     }
