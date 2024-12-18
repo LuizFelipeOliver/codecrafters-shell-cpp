@@ -39,9 +39,10 @@ vector<string> echoParse(const std::string &line) {
     char ch = line[i];
 
     if (escape_next) {
-      if (i + 1 < line.size() && line[i + 1] == "  \\") {
-        current_token.push_back(ch);
-        i++;
+      if (i + 1 < line.size() && line[i + 1] == ' ' && i + 2 < line.size() &&
+          line[i + 2] == ' ') {
+        current_token.push_back(' ');
+        i += 2;
         continue;
       }
       escape_next = false;
@@ -51,8 +52,6 @@ vector<string> echoParse(const std::string &line) {
     if (ch == '\\') {
 
       current_token.push_back(ch);
-      current_token.push_back(' ');
-      current_token.push_back(' ');
       escape_next = true;
       continue;
     }
