@@ -39,12 +39,6 @@ vector<string> echoParse(const std::string &line) {
     char ch = line[i];
 
     if (escape_next) {
-      if (i + 1 < line.size() && line[i + 1] == ' ') {
-
-        current_token.push_back(' ');
-        i++;
-        continue;
-      }
       current_token.push_back(ch);
       escape_next = false;
       continue;
@@ -52,7 +46,6 @@ vector<string> echoParse(const std::string &line) {
 
     if (ch == '\\') {
       if (i + 1 < line.size() && line[i + 1] == ' ') {
-
         current_token.push_back(' ');
         i++;
         continue;
