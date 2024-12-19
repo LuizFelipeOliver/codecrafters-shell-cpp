@@ -39,7 +39,7 @@ vector<string> echoParse(const string &line) {
     char ch = line[i];
 
     if (escape_next) {
-      if (i + 1 < line.size() && line[i + 1] == ' ') {
+      if (i + 1 < line.size() && line[i + 1] == ' ' && line[i + 2] == '\\') {
         current_token.push_back(' ');
         i++;
         continue;
