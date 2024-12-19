@@ -44,7 +44,7 @@ vector<string> echoParse(const string &line) {
       continue;
     }
 
-    if (ch == '\\') {
+    if (inside_quotes && ch == '\\') {
       escape_next = true;
       continue;
     }
