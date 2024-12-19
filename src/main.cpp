@@ -44,14 +44,13 @@ vector<string> echoParse(const string &line) {
       continue;
     }
 
-    if (ch == '\\') {
+    if (ch == '\\' && ch == '\"') {
       escape_next = true;
       continue;
     }
 
     if (ch == '\"') {
       inside_quotes = !inside_quotes;
-      escape_next = false;
       continue;
     }
     if (ch == '\'' && !inside_quotes) {
