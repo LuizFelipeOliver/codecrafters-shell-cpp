@@ -43,8 +43,12 @@ vector<string> echoParse(const string &line) {
       escape_next = false;
       continue;
     }
+    if (inside_single_quotes && ch == '\\') {
+      current_token.push_back(ch);
+      continue;
+    }
 
-    if (inside_quotes && ch == '\\') {
+    if (!inside_quotes && ch == '\\') {
       escape_next = true;
       continue;
     }
@@ -56,11 +60,6 @@ vector<string> echoParse(const string &line) {
 
     if (ch == '\'' && !inside_quotes) {
       inside_single_quotes = !inside_single_quotes;
-      continue;
-    }
-
-    if (inside_single_quotes && ch == '\\') {
-      current_token.push_back(ch);
       continue;
     }
 
