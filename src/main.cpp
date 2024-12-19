@@ -29,48 +29,49 @@ string get_path(string command) {
 }
 
 vector<string> echoParse(const string &line) {
-  vector<string> args;
+  vector<std::string> args;
   string current_token;
   bool inside_quotes = false;
+  bool escape_next = false;
   bool inside_single_quotes = false;
 
   for (size_t i = 0; i < line.size(); ++i) {
     char ch = line[i];
 
-    if (inside_quotes || inside_single_quotes) {
-      if (ch == '\\') {
-        current_token.push_back(ch);
-
-      } else if (ch == '\"' && inside_quotes) {
-
-        inside_quotes = false;
-        continue;
-      } else if (ch == '\'' && inside_single_quotes) {
-
-        inside_single_quotes = false;
+    if (escape_next) {
+      if (i + 1 < line.size() && line[i + 1] == ' ') {
+        current_token.push_back(' ');
+        i++;
         continue;
       }
+      escape_next = false;
+      continue;
+    }
+
+    if (ch == '\\') {
+
       current_token.push_back(ch);
+      current_token.push_back(' ');
+      current_token.push_back(' ');
+      escape_next = true;
+      continue;
+    }
+
+    if (ch == '\"') {
+      inside_quotes = !inside_quotes;
+      continue;
+    }
+    if (ch == '\'' && !inside_quotes) {
+      inside_single_quotes = !inside_single_quotes;
+      continue;
+    }
+    if (!inside_quotes && !inside_single_quotes && ch == ' ') {
+      if (!current_token.empty()) {
+        args.push_back(current_token);
+        current_token.clear();
+      }
     } else {
-      if (ch == '\\') {
-        continue;
-      }
-      if (ch == '\"') {
-        inside_quotes = true;
-        continue;
-      }
-      if (ch == '\'') {
-        inside_single_quotes = true;
-        continue;
-      }
-      if (ch == ' ') {
-        if (!current_token.empty()) {
-          args.push_back(current_token);
-          current_token.clear();
-        }
-      } else {
-        current_token.push_back(ch);
-      }
+      current_token.push_back(ch);
     }
   }
 
