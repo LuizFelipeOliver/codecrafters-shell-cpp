@@ -44,7 +44,7 @@ vector<string> echoParse(const string &line) {
       continue;
     }
 
-    if (!inside_quotes && ch == '\\') {
+    if (inside_quotes && ch == '\\') {
       escape_next = true;
       continue;
     }
@@ -59,7 +59,7 @@ vector<string> echoParse(const string &line) {
       continue;
     }
 
-    if (!inside_single_quotes && ch == '\\') {
+    if (inside_single_quotes && ch == '\\') {
       cout << true << endl;
       current_token.push_back(ch);
       continue;
