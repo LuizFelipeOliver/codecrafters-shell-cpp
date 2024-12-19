@@ -39,20 +39,12 @@ vector<string> echoParse(const string &line) {
     char ch = line[i];
 
     if (escape_next) {
-      if (i + 1 < line.size() && line[i + 1] == ' ') {
-        current_token.push_back(' ');
-        i++;
-        continue;
-      }
+      current_token.push_back(ch);
       escape_next = false;
       continue;
     }
 
     if (ch == '\\') {
-
-      current_token.push_back(ch);
-      current_token.push_back(' ');
-      current_token.push_back(' ');
       escape_next = true;
       continue;
     }
@@ -65,20 +57,19 @@ vector<string> echoParse(const string &line) {
       inside_single_quotes = !inside_single_quotes;
       continue;
     }
+
     if (!inside_quotes && !inside_single_quotes && ch == ' ') {
       if (!current_token.empty()) {
         args.push_back(current_token);
         current_token.clear();
       }
-    } else {
-      current_token.push_back(ch);
+      continue;
     }
+    current_token.push_back(ch);
   }
-
   if (!current_token.empty()) {
     args.push_back(current_token);
   }
-
   return args;
 }
 
