@@ -32,53 +32,35 @@ string get_path(string command) {
 vector<string> echoParse(string_view line) {
   vector<string> args;
   string current_token;
-
   bool inside_quotes = false;
   bool escape_next = false;
   bool inside_single_quotes = false;
 
-  for (char ch : line) {
+  for (size_t i = 0; i < line.size(); ++i) {
+    char ch = line[i];
 
     if (escape_next) {
       current_token.push_back(ch);
       escape_next = false;
       continue;
     }
-    if (!inside_quotes && !inside_single_quotes && ch == '\\') {
-      cout << 1;
+
+    if (inside_quotes && ch == '\\') {
       escape_next = true;
       continue;
     }
 
-    if (inside_quotes) {
-      if (ch == '\\') {
-        escape_next = true;
-        continue;
-      };
-
-      if (ch == '$' || ch == '`' || ch == '\\' || ch == '!') {
-        current_token.push_back(ch);
-        continue;
-      }
-    };
-
-    if (inside_single_quotes) {
-      if (ch == '\'') {
-        inside_single_quotes = false;
-        continue;
-      };
-
-      current_token.push_back(ch);
-      continue;
-    };
-
-    if (ch == '\'' && !inside_quotes) {
-      inside_single_quotes = true;
+    if (ch == '\"') {
+      inside_quotes = !inside_quotes;
       continue;
     }
 
-    if (ch == '\"' && !inside_single_quotes) {
-      inside_quotes = !inside_quotes;
+    if (ch == '\'' && !inside_quotes) {
+      if (inside_single_quotes) {
+        inside_single_quotes = false;
+      } else {
+        inside_single_quotes = true;
+      }
       continue;
     }
 
@@ -92,7 +74,7 @@ vector<string> echoParse(string_view line) {
     current_token.push_back(ch);
   }
   if (!current_token.empty()) {
-    args.push_back(std::move(current_token));
+    args.push_back(current_token);
   }
   return args;
 }
