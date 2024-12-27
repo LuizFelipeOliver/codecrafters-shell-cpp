@@ -37,8 +37,7 @@ vector<string> echoParse(string_view line) {
   bool escape_next = false;
   bool inside_single_quotes = false;
 
-  for (size_t i = 0; i < line.size(); ++i) {
-    char ch = line[i];
+  for (char ch : line) {
 
     if (escape_next) {
       current_token.push_back(ch);
@@ -51,6 +50,7 @@ vector<string> echoParse(string_view line) {
         escape_next = true;
         continue;
       };
+
       if (ch == '$' || ch == '`' || ch == '\\' || ch == '!') {
         current_token.push_back(ch);
         continue;
@@ -59,10 +59,11 @@ vector<string> echoParse(string_view line) {
 
     if (inside_single_quotes) {
       if (ch == '\'') {
-        inside_single_quotes = false; // Fecha aspas simples
+        inside_single_quotes = false;
         continue;
       };
-      current_token.push_back(ch); // Adiciona literal
+
+      current_token.push_back(ch);
       continue;
     };
 
@@ -86,7 +87,7 @@ vector<string> echoParse(string_view line) {
     current_token.push_back(ch);
   }
   if (!current_token.empty()) {
-    args.push_back(current_token);
+    args.push_back(std::move(current_token));
   }
   return args;
 }
