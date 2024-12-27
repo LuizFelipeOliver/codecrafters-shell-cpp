@@ -44,6 +44,11 @@ vector<string> echoParse(string_view line) {
       escape_next = false;
       continue;
     }
+    if (!inside_quotes && !inside_single_quotes && ch == '\\') {
+      cout << 1;
+      escape_next = true;
+      continue;
+    }
 
     if (inside_quotes) {
       if (ch == '\\') {
@@ -74,12 +79,6 @@ vector<string> echoParse(string_view line) {
 
     if (ch == '\"' && !inside_single_quotes) {
       inside_quotes = !inside_quotes;
-      continue;
-    }
-
-    if (inside_quotes && !inside_single_quotes && ch == '\\') {
-      cout << 1;
-      escape_next = true;
       continue;
     }
 
