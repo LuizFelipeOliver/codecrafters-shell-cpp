@@ -43,11 +43,6 @@ vector<string> echoParse(const string &line) {
       escape_next = false;
       continue;
     }
-    if (inside_single_quotes && ch == '\\') {
-      current_token.push_back(ch);
-      inside_quotes = false;
-      continue;
-    }
 
     if (inside_quotes && ch == '\\') {
       escape_next = true;
