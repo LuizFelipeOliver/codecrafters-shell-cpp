@@ -74,11 +74,11 @@ vector<string> echoParse(string_view line) {
 
     if (ch == '\"' && !inside_single_quotes) {
       inside_quotes = !inside_quotes;
-      escape_next = true;
       continue;
     }
 
-    if (ch == '\\') {
+    if (!inside_quotes && !inside_single_quotes && ch == '\\') {
+      cout << 1;
       escape_next = true;
       continue;
     }
