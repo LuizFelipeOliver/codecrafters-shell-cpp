@@ -77,8 +77,8 @@ vector<string> echoParse(string_view line) {
       continue;
     }
 
-    if (inside_single_quotes && ch == '\\') {
-      escape_next = false;
+    if (ch == '\\') {
+      escape_next = true;
       continue;
     }
 
