@@ -46,22 +46,33 @@ vector<string> echoParse(string_view line) {
       continue;
     }
 
-    if (inside_quotes && ch == '\\') {
-      escape_next = true;
-      continue;
-    }
+    if (inside_quotes) {
+      if (ch == '\\') {
+        escape_next = true;
+        continue;
+      };
+      if (ch == '$' || ch == '`' || ch == '\\' || ch == '!') {
+        current_token.push_back(ch);
+        continue;
+      }
+    };
 
-    if (ch == '\"') {
-      inside_quotes = !inside_quotes;
+    if (inside_single_quotes) {
+      if (ch == '\'') {
+        inside_single_quotes = false; // Fecha aspas simples
+        continue;
+      };
+      current_token.push_back(ch); // Adiciona literal
       continue;
-    }
+    };
 
     if (ch == '\'' && !inside_quotes) {
-      if (inside_single_quotes) {
-        inside_single_quotes = false;
-      } else {
-        inside_single_quotes = true;
-      }
+      inside_single_quotes = true;
+      continue;
+    }
+
+    if (ch == '\"' && !inside_single_quotes) {
+      inside_quotes = !inside_quotes;
       continue;
     }
 
