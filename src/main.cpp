@@ -55,7 +55,11 @@ vector<string> echoParse(const string &line) {
     }
 
     if (ch == '\'' && !inside_quotes) {
-      inside_single_quotes = !inside_single_quotes;
+      if (inside_single_quotes) {
+        inside_single_quotes = false;
+      } else {
+        inside_single_quotes = true;
+      }
       continue;
     }
 
