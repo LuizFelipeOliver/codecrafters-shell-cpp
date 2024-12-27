@@ -37,7 +37,8 @@ vector<string> echoParse(string_view line) {
   bool escape_next = false;
   bool inside_single_quotes = false;
 
-  for (char ch : line) {
+  for (size_t i = 0; i < line.size(); ++i) {
+    char ch = line[i];
 
     if (escape_next) {
       current_token.push_back(ch);
