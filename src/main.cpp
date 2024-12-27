@@ -77,6 +77,11 @@ vector<string> echoParse(string_view line) {
       continue;
     }
 
+    if (!inside_quotes && !inside_single_quotes && ch == '\\') {
+      escape_next = true;
+      continue;
+    }
+
     if (!inside_quotes && !inside_single_quotes && ch == ' ') {
       if (!current_token.empty()) {
         args.push_back(current_token);
