@@ -6,6 +6,7 @@
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <unistd.h>
 #include <unordered_map>
 #include <vector>
@@ -28,15 +29,15 @@ string get_path(string command) {
   return "";
 }
 
-vector<string> echoParse(const string &line) {
-  vector<std::string> args;
+vector<string> echoParse(string_view line) {
+  vector<string> args;
   string current_token;
+
   bool inside_quotes = false;
   bool escape_next = false;
   bool inside_single_quotes = false;
 
-  for (size_t i = 0; i < line.size(); ++i) {
-    char ch = line[i];
+  for (char ch : line) {
 
     if (escape_next) {
       current_token.push_back(ch);
@@ -49,7 +50,7 @@ vector<string> echoParse(const string &line) {
       continue;
     }
 
-    if (ch == '\"') {
+    if (ch == '\"' && !inside) {
       inside_quotes = !inside_quotes;
       continue;
     }
